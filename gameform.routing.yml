@@ -5,3 +5,6 @@ gameform.form:
     _title: 'CPHL Game Admin'
   requirements:
     _permission: 'admin content'
+    _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: TRUE
