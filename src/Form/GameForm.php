@@ -8,6 +8,7 @@ namespace Drupal\GameForm\Form;
 
 // way too many 'uses' but trying to see how to get this thing to work
 use Drupal\Core\Database\Database;
+use Drupal\Core\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -25,10 +26,12 @@ use Drupal\Core\Ajax\ReplaceCommand;
   */
 class GameForm extends FormBase {
 
+
   // Not sure I'm doing this correctly
   public function __construct() {
     $this->renderer = \Drupal::service('renderer');
     $this->response = new AjaxResponse();
+    $this->rebuild = true;
   }
 
   public function getFormId() {
@@ -98,10 +101,15 @@ class GameForm extends FormBase {
       ];
     }
 
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Submit')
-    );
+    // $form['submit'] = array(
+    //     '#type' => 'submit',
+    //     '#value' => t('Submit')
+    // );
+
+    $form['save'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Save'),
+    ];
 
     return $form;
   }
@@ -111,12 +119,14 @@ class GameForm extends FormBase {
   public function getRosterTeam1(array &$form, FormStateInterface $form_state) {
       $new_element = $this->teamData(1, $form_state->getValue('team1'));
       $this->response->addCommand(new ReplaceCommand('#team-1-roster', $this->renderer->render($new_element)));
+      $form_state->setRebuild();
       return $this->response;
   }
 
   public function getRosterTeam2(array &$form, FormStateInterface $form_state) {
       $new_element = $this->teamData(2, $form_state->getValue('team2'));
       $this->response->addCommand(new ReplaceCommand('#team-2-roster', $this->renderer->render($new_element)));
+      $form_state->setRebuild();
       return $this->response;
   }
 
