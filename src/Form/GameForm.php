@@ -157,21 +157,24 @@ class GameForm extends FormBase {
                 ->fetchAll();
     $player = [];
 
-    $stats = ['assists', 'goals', 'pim', 'plusminus', 'shots'];
+    $stats = ['assists', 'goals', 'pim', 'shots_on_goal'];
     $form["team{$team}roster"]['prefix'] = [
-       '#prefix' => "<div class=\"team{$team}roster\"><strong>Team {$team} Roster</strong><table><tr><th>Name / Number</th><th>Assits</th><th>Goals</th><th>Pim</th><th>+/-</th><th>Shots</th></tr>",
+       '#prefix' => "<div class=\"team{$team}roster\"><strong>Team {$team} Roster</strong><table><tr><th width=\"300\">Name / Number</th><th>Assits</th><th>Goals</th><th>Pim</th><th>Shots On Goal</th></tr>",
     ];
 
     foreach ($query as $key => $value) {
         $node = Node::load($value->field_team_player_target_id);
           $form["team{$team}roster"][]['name'] = [
             '#prefix' => "<div class=\"team{$team}rosterrow\"><tr class=\"team{$team}row\"><td>",
-            '#markup' => $node->field_player_number->value . ' :: ' . $node->title->value,
+            '#markup' => '<strong>' . $node->title->value . '</strong> ' . $node->field_player_number->value . ' ' . $node->field_player_position->value,
             '#size' => 25,
             '#attributes' => [
               'id' => ["team-{$team}-roster-{$node->field_player_number->value}"],
             ],
           ];
+
+        // $disabled = ($node->field_player_position == 'Goalie' ? true : false);
+
         foreach ($stats as $stat) {
             $form["team{$team}roster"][][$stat] = [
               '#type' => 'textfield',
