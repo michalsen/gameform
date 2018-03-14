@@ -1,0 +1,8 @@
+gameform:
+  version: 1.x
+  css:
+    base:
+      css/gameform.css: {}
+  js:
+    js/gameform.js: {}
+

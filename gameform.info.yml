@@ -1,0 +1,5 @@
+name: CPHL Game Form
+type: module
+description: 'Game Admin Page'
+core: 8.x
+package: Custom

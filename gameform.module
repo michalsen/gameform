@@ -1,0 +1,12 @@
+<?php
+/**
+ *  @file
+ *  Game From
+ */
+
+
+function gameform_page_attachments_alter(&$build) {
+
+  $build['#attached']['library'][] = 'gameform/gameform';
+
+}

@@ -1,0 +1,7 @@
+gameform.form:
+  path: '/admin/cphlgame'
+  defaults:
+    _form: '\Drupal\gameform\Form\GameForm'
+    _title: 'CPHL Game Admin'
+  requirements:
+    _permission: 'admin content'
